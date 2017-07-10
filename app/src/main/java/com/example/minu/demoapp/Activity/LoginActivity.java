@@ -17,6 +17,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void callFragment() {
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_frame, new RegisterFragment(), "signIn").addToBackStack(null).commit();
+                .replace(R.id.fragment_frame, new SignInFragment(), "signIn").addToBackStack(null).commit();
     }
 }

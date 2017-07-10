@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.minu.demoapp.Activity.FeedActivity;
+import com.example.minu.demoapp.Model.Id;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -131,7 +132,9 @@ import java.util.concurrent.Executor;
         private void updateUI(FirebaseUser user) {
             //hideProgressDialog();
             if (user != null) {
-
+                String id = user.getUid();
+                Log.d("ididid", id);
+                Id.userId = id;
             } else {
             }
         }
