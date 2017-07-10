@@ -1,0 +1,106 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/gradient"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="40dp">
+
+               <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/taxi"
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="serif-monospace"
+                    android:padding="10dp"
+
+                    android:text="Sign Up"
+                    android:textAlignment="center"
+                    android:textColor="@color/white1"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />-
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:id="@+id/uploadImage"
+                    android:layout_height="100dp"
+
+                    android:background="@drawable/rounded_edittext"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="center"/>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/ruserName"
+                    style="@style/custom_editText"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:drawableRight="@mipmap/ic_account_circle"
+                    android:hint="Name"
+                    android:singleLine="true" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/ruserEmail"
+                    style="@style/custom_editText"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:drawableRight="@android:drawable/sym_action_email"
+                    android:hint="Email"
+                    android:singleLine="true" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/ruserPassword"
+                    style="@style/custom_editText"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:drawableRight="@mipmap/ic_action_lock_closed"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+
+               <!-- <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/uploadImage"
+                    style="@style/custom_editText"
+                    android:layout_width="100dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorPrimary"
+                    android:drawableRight="@android:drawable/ic_menu_camera"
+                    android:gravity="center"
+                    android:text="Upload Image" />-->
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/register1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/btn"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="3"
+                    android:shadowDy="2"
+                    android:shadowRadius="8"
+                    android:text="Register"
+                    android:textColor="@color/white1"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

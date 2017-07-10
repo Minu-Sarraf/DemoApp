@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="custom_editText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">@color/white1</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+</resources>
