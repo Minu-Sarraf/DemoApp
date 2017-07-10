@@ -43,4 +43,5 @@ public class RegisterFragment extends BaseClass {
             createAccount(rEmailField.getText().toString(), rPasswordField.getText().toString());
         }
     }
+
 }

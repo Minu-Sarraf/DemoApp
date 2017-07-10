@@ -1,6 +1,7 @@
 package com.example.minu.demoapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minu.demoapp.Activity.FeedActivity;
 import com.example.minu.demoapp.R;
 import com.example.minu.demoapp.ShowLog;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,8 +65,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
-
     private void AuthListener() {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -74,8 +74,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 if (user != null) {
 
                     // User is signed in
-                  //  signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                   signIn("minusarraf96@gmail.com","bex432505");
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    //updateUI(user);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -108,10 +109,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 });
     }
     public void signIn(String email, String password) {
-        if (!validateForm()) {
+       /* if (!validateForm()) {
             return;
         }
-
+*/
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -125,7 +126,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                           // updateUI(null);
+
                         } else {
                             Log.w(TAG, "signInWithEmail Success");
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -161,9 +163,16 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-
+            getCurrentUser();
+            Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
+            startActivity(feedAactivity);
+            getActivity().finish();
+           /* FragmentManager fm=getFragmentManager();
+            fm.beginTransaction().replace(R.id.fragment_frame, (Fragment)new RegisterFragment()).commit();*/
         } else {
+            ShowLog.log(TAG,"UPDTAEUI"+user);
         }
+
     }
 
     public void getCurrentUser() {
@@ -173,6 +182,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             String name = user.getDisplayName();
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
+            ShowLog.log(TAG,name+" email : "+email);
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
@@ -184,7 +194,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.login) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }else if(view.getId() == R.id.register){
             FragmentManager fm=getFragmentManager();
             fm.beginTransaction().replace(R.id.fragment_frame, (Fragment)new RegisterFragment()).commit();

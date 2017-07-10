@@ -25,21 +25,20 @@ import java.util.concurrent.Executor;
  */
 
 
+public abstract class BaseClass extends Fragment implements View.OnClickListener {
+    public static final String TAG = "Leapfrog.SiginIn";
+    public FirebaseAuth mAuth;
+    public FirebaseAuth.AuthStateListener mAuthListener;
 
-    public abstract class BaseClass extends Fragment implements View.OnClickListener {
-        public static final String TAG = "Leapfrog.SiginIn";
-        public FirebaseAuth mAuth;
-        public FirebaseAuth.AuthStateListener mAuthListener;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ShowLog.log("BaseClass", "Baseclass");
+        mAuth = FirebaseAuth.getInstance();
+        AuthListener();
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            ShowLog.log("BaseClass","Baseclass");
-            mAuth = FirebaseAuth.getInstance();
-            AuthListener();
-
-        }
+    }
 
       /*  @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,134 +49,140 @@ import java.util.concurrent.Executor;
             //return view;
         }*/
 
-        @Override
-        public void onStart() {
-            super.onStart();
-            mAuth.addAuthStateListener(mAuthListener);
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
 
 
-        public void AuthListener() {
-            mAuthListener = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user != null) {
-                        // User is signed in
+    public void AuthListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
 
-                        Intent feeds = new Intent(getActivity(),FeedActivity.class);
-                        startActivity(feeds);
-
-                        ShowLog.log(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    } else {
-                        // User is signed out
-                        Log.d(TAG, "onAuthStateChanged:signed_out");
-                    }
-                    // ...
+                   /* Intent feeds = new Intent(getActivity(), FeedActivity.class);
+                    startActivity(feeds);
+                    getActivity().finish();*/
+                    ShowLog.log(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-            };
-        }
+                // ...
+            }
+        };
+    }
 
-        public void createAccount(String email, String password) {
+    public void createAccount(String email, String password) {
             /*if (!validateForm()) {
                 return;
             }*/
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-                            // ...
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            updateUI(mAuth.getCurrentUser());
                         }
-                    });
-        }
-        public void signIn(String email, String password) {
+
+                        // ...
+                    }
+                });
+    }
+
+    public void signIn(String email, String password) {
            /* if (!validateForm()) {
                 return;
             }*/
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "signInWithEmail", task.getException());
-                                Toast.makeText(getActivity(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            } else  {
-                                Log.w(TAG, "signInWithEmail Success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
-                            }
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail", task.getException());
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        } else {
+                            Log.w(TAG, "signInWithEmail Success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
                         }
-                    });
+                    }
+                });
+    }
+
+
+    private void updateUI(FirebaseUser user) {
+        //hideProgressDialog();
+        if (user != null) {
+            String id = user.getUid();
+            Log.d("ididid", id);
+            Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
+            startActivity(feedAactivity);
+            getActivity().finish();
+            Id.userId = id;
+        } else {
         }
+    }
 
+    public void getCurrentUser() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
 
-        private void updateUI(FirebaseUser user) {
-            //hideProgressDialog();
-            if (user != null) {
-                String id = user.getUid();
-                Log.d("ididid", id);
-                Id.userId = id;
-            } else {
-            }
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            String uid = user.getUid();
         }
+    }
 
-        public void getCurrentUser() {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                // Name, email address, and profile photo Url
-                String name = user.getDisplayName();
-                String email = user.getEmail();
-                Uri photoUrl = user.getPhotoUrl();
 
-                // The user's ID, unique to the Firebase project. Do NOT use this value to
-                // authenticate with your backend server, if you have one. Use
-                // FirebaseUser.getToken() instead.
-                String uid = user.getUid();
-            }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
 
 
-        @Override
-        public void onStop() {
-            super.onStop();
-            if (mAuthListener != null) {
-                mAuth.removeAuthStateListener(mAuthListener);
-            }
-        }
-
-
-        @Override
-        public void onAttach(Context context) {
-            super.onAttach(context);
-
-        }
-
-        @Override
-        public void onDetach() {
-            super.onDetach();
-
-        }
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+    }
+
+
+}
 
 
 

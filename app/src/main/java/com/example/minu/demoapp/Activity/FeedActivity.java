@@ -1,5 +1,6 @@
 package com.example.minu.demoapp.Activity;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,7 +35,8 @@ public class FeedActivity extends AppCompatActivity
     public DatabaseReference mFirebaseDatabase;
     RecyclerView recyclerView;
     private Recyclerview_adapter rec_adapter;
-    List<FeedDataModel> userFeed = new ArrayList<FeedDataModel>();
+    List<FeedDataModel.FeedsBean> userFeed = new ArrayList<FeedDataModel.FeedsBean>();
+    private String TAG = "LeapFrog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class FeedActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         //getReference of database
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("feeds");
 
@@ -64,12 +65,12 @@ public class FeedActivity extends AppCompatActivity
 
     protected void onStart() {
         super.onStart();
-
+        ShowLog.log(TAG, "onstart");
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
         mFirebaseDatabase = mFirebaseInstance.getReference("feeds");
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("feeds").child(Id.userId);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("feeds");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,16 +80,16 @@ public class FeedActivity extends AppCompatActivity
 
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     ShowLog.log("mData Key", userSnapshot.getKey());
-                    FeedDataModel feedData = userSnapshot.getValue(FeedDataModel.class);
+                    FeedDataModel.FeedsBean feedData = userSnapshot.getValue(FeedDataModel.FeedsBean.class);
                     userFeed.add(feedData);
 
-                    ShowLog.log("mData idvalue", feedData.toString());
-                    ShowLog.log("mData User", feedData.getFeeds().get(0).getStatus());
+                    ShowLog.log(TAG, userSnapshot.getChildrenCount() + "");
+//                    ShowLog.log("mData User",userFeed.get(0).getFeeds().get(0).getUserName());
                 }
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
 
-                rec_adapter = new Recyclerview_adapter(userFeed);
+                rec_adapter = new Recyclerview_adapter(FeedActivity.this,userFeed);
                 recyclerView.setAdapter(rec_adapter);
                 recyclerView.setHasFixedSize(true);
             }
