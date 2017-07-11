@@ -12,7 +12,7 @@ import com.example.minu.demoapp.Permission;
  * Created by User on 7/15/2016.
  */
 public class Gallery {
-    public static void galleryintent(Context c) {
+    public static void galleryIntent(Context c) {
         boolean result2 = Permission.Utility.checkPermission(c, android.Manifest.permission.READ_EXTERNAL_STORAGE, Constant.gallary, "READ_EXTERNAL_STORAGE permission is necessary");
         if (result2) {
             Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);

@@ -2,20 +2,18 @@ package com.example.minu.demoapp.Adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.minu.demoapp.AlertUtils.ProgressDialog;
+import com.example.minu.demoapp.Activity.UserProfileActivity;
+import com.example.minu.demoapp.DisplaySize;
 import com.example.minu.demoapp.Model.FeedDataModel;
 import com.example.minu.demoapp.R;
 import com.example.minu.demoapp.ShowLog;
@@ -60,13 +58,17 @@ public class Recyclerview_adapter extends RecyclerView.Adapter<Recyclerview_adap
         //  holder.profile_img.s
         Log.e("url", list.get(position).getFeedImage());
     }
-//To Overcome out of memory exception, use resize
+
+    //To Overcome out of memory exception, use resize
 
     public void picassoload(final String ivimage, final ImageView holderImg, final viewholder holder) {
         holder.progressView.setVisibility(View.VISIBLE);
         holder.progressView.start();
-        final Point displySize = getDisplaySize();
-        final int size = (int) Math.ceil(Math.sqrt(displySize.x * displySize.y));
+        final Point displySize = DisplaySize.getDisplaySize(context);
+        int size = (int) Math.ceil(Math.sqrt(displySize.x * displySize.y));
+        if (holderImg == holder.profile_img) {
+            size = 50;
+        }
         Picasso.with(context).load(ivimage).resize(size, size).placeholder(R.drawable.leapfroglogo).into(holderImg, new Callback() {
             @Override
             public void onSuccess() {
@@ -83,31 +85,15 @@ public class Recyclerview_adapter extends RecyclerView.Adapter<Recyclerview_adap
         });
     }
 
-    public Point getDisplaySize() {
-        Point size = new Point();
-        DisplayMetrics metrics = new DisplayMetrics();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-        size = new Point(width, height);
-        return size;
-    }
 
     @Override
     public int getItemCount() {
 
         ShowLog.log("listsize", String.valueOf(list.size()));
-
         return list.size();
     }
 
-
-   /* public void setUndoOn(boolean undoOn) {
-        this.undoOn = undoOn;
-    }*/
-
-
-    public class viewholder extends RecyclerView.ViewHolder {
+    public class viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView user_name, user_status;
         ImageView feed_image, profile_img;
         private final ProgressView progressView;
@@ -119,8 +105,17 @@ public class Recyclerview_adapter extends RecyclerView.Adapter<Recyclerview_adap
             progressView = (ProgressView) itemView.findViewById(R.id.progressview);
             profile_img = itemView.findViewById(R.id.profilePic);
             feed_image = itemView.findViewById(R.id.feedImage1);
+            user_name.setOnClickListener(this);
+            profile_img.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.name || view.getId() == R.id.profilePic) {
+                Intent profile = new Intent(context, UserProfileActivity.class);
+                context.startActivity(profile);
+            }
+        }
     }
 
 

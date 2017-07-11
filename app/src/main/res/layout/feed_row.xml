@@ -30,13 +30,14 @@
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
                 android:scaleType="fitCenter"></ImageView>
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:paddingLeft="@dimen/feed_item_profile_info_padd"
-                android:text="mmmmmmmmmmm"
+                android:clickable="true"
+                android:text="Minu Sarraf"
                 android:textSize="@dimen/feed_item_profile_name"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/logout"
+        android:id="@+id/setting"
         android:orderInCategory="100"
         android:icon="@drawable/logout"
         android:iconTint="@color/primary_text"

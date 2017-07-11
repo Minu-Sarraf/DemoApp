@@ -66,7 +66,7 @@ public class FeedActivity extends AppCompatActivity
 
     protected void onStart() {
         super.onStart();
-        ShowLog.log(TAG, "onstart");
+
         progressView.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();

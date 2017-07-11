@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="40dp">
 
-               <android.support.v7.widget.AppCompatTextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/taxi"
                     style="@android:style/TextAppearance.Large"
                     android:layout_width="wrap_content"
@@ -41,14 +41,15 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="100dp"
                     android:id="@+id/uploadImage"
+                    android:layout_width="100dp"
                     android:layout_height="100dp"
-
+                    android:layout_gravity="center"
                     android:background="@drawable/rounded_edittext"
-                    android:src="@android:drawable/ic_menu_camera"
+                    android:clickable="true"
                     android:scaleType="centerInside"
-                    android:layout_gravity="center"/>
+                    android:src="@android:drawable/ic_menu_camera" />
+
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/ruserName"
                     style="@style/custom_editText"
@@ -76,16 +77,16 @@
                     android:hint="Password"
                     android:inputType="textPassword" />
 
-               <!-- <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/uploadImage"
-                    style="@style/custom_editText"
-                    android:layout_width="100dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
-                    android:drawableRight="@android:drawable/ic_menu_camera"
-                    android:gravity="center"
-                    android:text="Upload Image" />-->
+                <!-- <android.support.v7.widget.AppCompatButton
+                     android:id="@+id/uploadImage"
+                     style="@style/custom_editText"
+                     android:layout_width="100dp"
+                     android:layout_gravity="center_vertical"
+                     android:layout_marginTop="10dp"
+                     android:background="@color/colorPrimary"
+                     android:drawableRight="@android:drawable/ic_menu_camera"
+                     android:gravity="center"
+                     android:text="Upload Image" />-->
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/register1"
@@ -98,7 +99,7 @@
                     android:shadowDy="2"
                     android:shadowRadius="8"
                     android:text="Register"
-                    android:textColor="@color/white1"/>
+                    android:textColor="@color/white1" />
 
             </LinearLayout>
         </ScrollView>

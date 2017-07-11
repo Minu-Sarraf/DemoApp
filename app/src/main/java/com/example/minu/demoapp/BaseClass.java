@@ -77,10 +77,13 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
         };
     }
 
-    public void createAccount(String email, String password) {
+    int status;
+
+    public int createAccount(String email, String password) {
             /*if (!validateForm()) {
                 return;
             }*/
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -91,15 +94,18 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+                            status = 0;
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
+                            status = 1;
                             updateUI(mAuth.getCurrentUser());
                         }
 
                         // ...
                     }
                 });
+        return status;
     }
 
     public void signIn(String email, String password) {
@@ -134,6 +140,7 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
+
             String id = user.getUid();
             Log.d("ididid", id);
             Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
@@ -153,9 +160,9 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
             Uri photoUrl = user.getPhotoUrl();
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
+
             String uid = user.getUid();
+            Id.userId = uid;
         }
     }
 
@@ -166,6 +173,7 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        FirebaseAuth.getInstance().signOut();
     }
 
 

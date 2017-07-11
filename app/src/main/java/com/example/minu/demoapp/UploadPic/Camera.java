@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 public class Camera {
 
-    public static Uri cameraintent(Context c) throws IOException {
+    public static Uri cameraIntent(Context c) throws IOException {
         Log.e("camera", "camera");
         Uri outputUri = null;
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
@@ -35,13 +35,13 @@ public class Camera {
         File out = null;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             // out = new File(MyApplication.getInstance().getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + timeStamp + ".jpg");
-        }else{
-           // out=new File(c.getFilesDir().getAbsolutePath(),timeStamp+"jpg");
-            Toast.makeText(c,"You dont have Sd-card", Toast.LENGTH_LONG).show();
+        } else {
+            // out=new File(c.getFilesDir().getAbsolutePath(),timeStamp+"jpg");
+            Toast.makeText(c, "You dont have Sd-card", Toast.LENGTH_LONG).show();
         }
         File path = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-        File file = new File(path,timeStamp +".jpg");
+        File file = new File(path, timeStamp + ".jpg");
         try {
             // Make sure the Pictures directory exists.
             path.mkdirs();
@@ -50,8 +50,8 @@ public class Camera {
             e.printStackTrace();
         }
         outputUri = Uri.fromFile(file.getAbsoluteFile());
-
-        Uri picUri = outputUri;
+        //store in sharedPreference
+        Constant.camUri = outputUri;
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
