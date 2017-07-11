@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/feed_bg"
     android:orientation="vertical">
 
@@ -49,14 +50,25 @@
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
             android:paddingTop="@dimen/feed_item_status_pad_top" />
 
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progressview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:visibility="visible"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressMode="indeterminate"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress.Normal" />
         <ImageView
             android:id="@+id/feedImage1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:src="@drawable/leapfroglogo"
-            android:scaleType="fitXY"
-            android:visibility="visible" />
+
+             />
+
     </LinearLayout>
 
 </LinearLayout>

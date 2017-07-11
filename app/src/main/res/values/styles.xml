@@ -16,6 +16,18 @@
 
     </style>
 
+    <style name="Material.Drawable.CircularProgress.Normal" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColors">@array/progress_colors</item>
+        <item name="cpd_strokeColor">?attr/colorPrimary</item>
+    </style>
+    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:layout">@layout/splash_screen</item>
+    </style>
+
     <style name="custom_editText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">16sp</item>

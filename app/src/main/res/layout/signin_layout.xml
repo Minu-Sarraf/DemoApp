@@ -23,7 +23,7 @@
 
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/taxi"
+                android:id="@+id/sign"
                 style="@android:style/TextAppearance.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

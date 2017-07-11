@@ -113,7 +113,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             return;
         }
 */
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -194,7 +194,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.login) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            signIn("minusarraf96@gmail.com","bex432505");
         }else if(view.getId() == R.id.register){
             FragmentManager fm=getFragmentManager();
             fm.beginTransaction().replace(R.id.fragment_frame, (Fragment)new RegisterFragment()).commit();
