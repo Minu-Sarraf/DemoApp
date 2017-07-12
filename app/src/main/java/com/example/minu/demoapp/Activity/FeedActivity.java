@@ -1,5 +1,6 @@
 package com.example.minu.demoapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import com.example.minu.demoapp.Model.FeedDataModel;
 import com.example.minu.demoapp.R;
 import com.example.minu.demoapp.ShowLog;
 import com.example.minu.demoapp.Adapter.RecyclerviewAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -86,7 +88,6 @@ public class FeedActivity extends AppCompatActivity
                     userFeed.add(feedData);
 
                     ShowLog.log(TAG, userSnapshot.getChildrenCount() + "");
-//                    ShowLog.log("mData User",userFeed.get(0).getFeeds().get(0).getUserName());
                 }
 
                 progressView.setVisibility(View.GONE);
@@ -125,12 +126,6 @@ public class FeedActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.logout) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -139,10 +134,14 @@ public class FeedActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.logout) {
-            // Handle the camera action
+            FirebaseAuth.getInstance()
+                    .signOut();
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -62,13 +62,25 @@ public class RegisterFragment extends BaseClass {
     public void onClick(View view) {
         storeData();
         if (view.getId() == R.id.register1) {
-            int status = createAccount(rEmailField.getText().toString(), rPasswordField.getText().toString());
+            int status = createAccount("minusarraf@gmail.com","bex432505");
             if (status == 1) {
                 createUser();
             }
         } else if (view.getId() == R.id.uploadImage) {
             SelectImageDialog.selectImage(getActivity());
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //resume camera
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+      //  Camera.release();
     }
 
     private void storeData() {
@@ -88,7 +100,6 @@ public class RegisterFragment extends BaseClass {
     public void uploadPic(Uri uri) {
         ShowLog.log("camera", "upload");
         PicassoLoad.picassoload(uri, rUserImage, getActivity());
-
     }
 
 

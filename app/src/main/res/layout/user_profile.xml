@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/white1"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.minu.demoapp.Activity.UserProfileActivity">
 
@@ -22,11 +21,12 @@
         android:gravity="center"
        android:id="@+id/userName"
         android:padding="5dp"
+        android:textColor="@color/primary_text"
         android:text="Minu Sarraf"
         android:layout_below="@+id/userImg"
         android:layout_alignEnd="@+id/userImg"
         android:layout_alignStart="@+id/userImg"
-        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:fontFamily="serif-monospace"
         android:textSize="18sp"
         android:textStyle="normal|bold" />
@@ -34,6 +34,7 @@
         android:layout_width="185dp"
         android:id="@+id/logout"
         android:gravity="center"
+        android:textColor="@color/primary_text"
         android:layout_alignEnd="@+id/userName"
         android:layout_alignStart="@+id/userName"
         android:layout_below="@id/userName"

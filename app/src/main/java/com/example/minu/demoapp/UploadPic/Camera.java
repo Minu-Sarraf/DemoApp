@@ -32,7 +32,7 @@ public class Camera {
         Uri outputUri = null;
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
                 .format(new Date());
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
 
         File path = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
@@ -45,25 +45,29 @@ public class Camera {
         }
         outputUri = Uri.fromFile(file.getAbsoluteFile());
         //store in sharedPreference
-        storeUri(outputUri, c);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        } else {
-            List<ResolveInfo> resInfoList = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-            for (ResolveInfo resolveInfo : resInfoList) {
-                String packageName = resolveInfo.activityInfo.packageName;
-                c.grantUriPermission(packageName, outputUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        storeUri(outputUri, c, file);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(c.getPackageManager()) != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            } else {
+                List<ResolveInfo> resInfoList = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    c.grantUriPermission(packageName, outputUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
             }
+            ((Activity) c).startActivityForResult(intent, Constant.cam);
         }
-        ((Activity) c).startActivityForResult(intent, Constant.cam);
         return outputUri;
     }
 
-    private static void storeUri(Uri outputUri, Context context) {
+    private static void storeUri(Uri outputUri, Context context, File file) {
 
         SharedPreferences sp = context.getSharedPreferences("userInfo", context.MODE_PRIVATE);
         SharedPreferences.Editor et = sp.edit();
+        et.putString("file", String.valueOf(file.getAbsoluteFile()));
         et.putString("uri", String.valueOf(outputUri));
         et.commit();
     }

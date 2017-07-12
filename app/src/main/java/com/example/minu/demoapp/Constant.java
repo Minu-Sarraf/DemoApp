@@ -10,4 +10,5 @@ public class Constant {
     public static final int cam = 123;
     public static final int gallary = 124;
     public static Uri camUri;
+    public static String userInfo="userInfo";
 }

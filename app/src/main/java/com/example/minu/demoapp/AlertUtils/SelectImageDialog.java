@@ -22,11 +22,9 @@ public class SelectImageDialog {
                 "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select Photo!");
-        builder.setIcon(R.drawable.leapfroglogo);
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
-                boolean result = Permission.Utility.checkPermission(context, android.Manifest.permission.READ_EXTERNAL_STORAGE, Constant.gallary, "READ_EXTERNAL_STORAGE permission is necessary");
+            public void onClick(DialogInterface dialog, int item) {boolean result = Permission.Utility.checkPermission(context, android.Manifest.permission.READ_EXTERNAL_STORAGE, Constant.gallary, "READ_EXTERNAL_STORAGE permission is necessary");
                 ;
                 if (items[item].equals("Take Photo")) {
 

@@ -84,7 +84,7 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
                 return;
             }*/
 
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -140,12 +140,10 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-
             String id = user.getUid();
             Log.d("ididid", id);
             Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
             startActivity(feedAactivity);
-            getActivity().finish();
             Id.userId = id;
         } else {
         }
@@ -158,7 +156,6 @@ public abstract class BaseClass extends Fragment implements View.OnClickListener
             String name = user.getDisplayName();
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
-
             // The user's ID, unique to the Firebase project. Do NOT use this value to
 
             String uid = user.getUid();
