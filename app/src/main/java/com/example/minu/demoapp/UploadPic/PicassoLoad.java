@@ -27,14 +27,12 @@ import java.io.IOException;
 public class PicassoLoad {
 
     public static void picassoload(final Uri a, final ImageView ivimage, final Context context) {
-        final MaterialDialog dialog = null;
-        Log.e("uri", a.toString());
-        ProgressDialog.progress(context,dialog);
-        Picasso.with(context).load(a).resize(150,150).onlyScaleDown().memoryPolicy(MemoryPolicy.NO_CACHE)
+        ProgressDialog.progress(context);
+        Picasso.with(context).load(a).resize(200,200).onlyScaleDown().memoryPolicy(MemoryPolicy.NO_CACHE)
                 .centerInside().into(ivimage, new Callback() {
             @Override
             public void onSuccess() {
-                ProgressDialog.dismissDialog(context,dialog);
+                ProgressDialog.dismissDialog(context);
             }
 
             @Override
@@ -56,7 +54,7 @@ public class PicassoLoad {
                     }
                     ivimage.setImageBitmap(result);
                 } else {
-                    ProgressDialog.dismissDialog(context,dialog);
+                    ProgressDialog.dismissDialog(context);
                 }
 
 

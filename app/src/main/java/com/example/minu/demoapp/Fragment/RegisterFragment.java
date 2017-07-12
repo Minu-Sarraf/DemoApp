@@ -1,7 +1,9 @@
 package com.example.minu.demoapp.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.XmlResourceParser;
 import android.net.Uri;
@@ -37,7 +39,7 @@ public class RegisterFragment extends BaseClass {
 
 
     private EditText rEmailField, rPasswordField, rNameField;
-    ImageView rUserImage;
+    static ImageView rUserImage;
     Button rbtnRegister;
     private DatabaseReference mFirebaseDatabase;
 
@@ -58,6 +60,7 @@ public class RegisterFragment extends BaseClass {
 
     @Override
     public void onClick(View view) {
+        storeData();
         if (view.getId() == R.id.register1) {
             int status = createAccount(rEmailField.getText().toString(), rPasswordField.getText().toString());
             if (status == 1) {
@@ -68,6 +71,13 @@ public class RegisterFragment extends BaseClass {
         }
     }
 
+    private void storeData() {
+        SharedPreferences sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor et = sp.edit();
+        et.putString("name", rNameField.getText().toString());
+        et.commit();
+    }
+
     //store user data to Firebase Database
     public void createUser() {
         String key = mFirebaseDatabase.push().getKey();
@@ -75,24 +85,12 @@ public class RegisterFragment extends BaseClass {
         mFirebaseDatabase.child(Id.userId).child(key).child("email").setValue(rEmailField.getText());
     }
 
-    //listen
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void uploadPic(Uri uri) {
+        ShowLog.log("camera", "upload");
+        PicassoLoad.picassoload(uri, rUserImage, getActivity());
 
-        if (resultCode == Activity.RESULT_OK) {
-            Log.e("gallery", "galery");
-
-            Bundle args = new Bundle();
-            if (requestCode == Constant.gallary) {
-                PicassoLoad.picassoload(data.getData(), rUserImage, getActivity());
-
-            } else if (requestCode == Constant.cam) {
-                PicassoLoad.picassoload(Constant.camUri, rUserImage, getActivity());
-            }
-
-        }
     }
+
 
     Uri outputuri;
 
@@ -103,7 +101,7 @@ public class RegisterFragment extends BaseClass {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     try {
                         outputuri = Camera.cameraIntent(getActivity());
-                        Constant.camUri=outputuri;
+                        Constant.camUri = outputuri;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

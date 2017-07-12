@@ -17,21 +17,23 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/Splash">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:windowSoftInputMode="adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Activity.FeedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:theme="@style/AppTheme" android:name=".Activity.UserProfileActivity"></activity>
+        <activity
+            android:name=".Activity.UserProfileActivity"
+            android:parentActivityName=".Activity.FeedActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -21,11 +21,8 @@
         <item name="cpd_strokeColor">?attr/colorPrimary</item>
     </style>
     <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:layout">@layout/splash_screen</item>
+
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
     <style name="custom_editText">

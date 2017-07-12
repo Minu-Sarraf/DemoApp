@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minu.demoapp.Activity.FeedActivity;
+import com.example.minu.demoapp.Activity.LoginActivity;
 import com.example.minu.demoapp.Model.Id;
 import com.example.minu.demoapp.R;
 import com.example.minu.demoapp.ShowLog;
@@ -35,7 +36,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText mEmailField, mPasswordField;
-    Button btnLogin,btnRegister;
+    Button btnLogin, btnRegister;
 
 
     @Override
@@ -66,6 +67,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     private void AuthListener() {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -73,9 +75,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if (user != null) {
-                    Id.userId=user.getUid();
+                    Id.userId = user.getUid();
                     // User is signed in
-                   signIn("minusarraf96@gmail.com","bex432505");
+                    // signIn("minusarraf96@gmail.com","bex432505");
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     //updateUI(user);
                 } else {
@@ -109,12 +111,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     }
                 });
     }
+
     public void signIn(String email, String password) {
        /* if (!validateForm()) {
             return;
         }
 */
-        mAuth.signInWithEmailAndPassword(email,password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -127,7 +130,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                           // updateUI(null);
+                            // updateUI(null);
 
                         } else {
                             Log.w(TAG, "signInWithEmail Success");
@@ -137,6 +140,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     }
                 });
     }
+
     private boolean validateForm() {
         boolean valid = true;
 
@@ -160,17 +164,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-            Id.userId=user.getUid();
+            Id.userId = user.getUid();
             getCurrentUser();
-            Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
-            startActivity(feedAactivity);
-            getActivity().finish();
+            Intent feedActivity = new Intent(getActivity(), FeedActivity.class);
+            startActivity(feedActivity);
         } else {
-            ShowLog.log(TAG,"UPDTAEUI"+user);
+            ShowLog.log(TAG, "UPDTAEUI" + user);
         }
 
     }
@@ -182,7 +184,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             String name = user.getDisplayName();
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
-            ShowLog.log(TAG,name+" email : "+email);
+            ShowLog.log(TAG, name + " email : " + email);
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
@@ -194,10 +196,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.login) {
-            signIn("minusarraf96@gmail.com","bex432505");
-        }else if(view.getId() == R.id.register){
-            FragmentManager fm=getFragmentManager();
-            fm.beginTransaction().replace(R.id.fragment_frame, (Fragment)new RegisterFragment()).commit();
+            signIn("minusarraf96@gmail.com", "bex432505");
+        } else if (view.getId() == R.id.register) {
+            ((LoginActivity) getActivity()).callFragment();
 
         }
     }

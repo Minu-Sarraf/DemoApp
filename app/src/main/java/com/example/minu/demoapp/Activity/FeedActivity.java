@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,7 @@ import android.view.View;
 import com.example.minu.demoapp.Model.FeedDataModel;
 import com.example.minu.demoapp.R;
 import com.example.minu.demoapp.ShowLog;
-import com.example.minu.demoapp.Adapter.Recyclerview_adapter;
+import com.example.minu.demoapp.Adapter.RecyclerviewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +33,7 @@ public class FeedActivity extends AppCompatActivity
 
     public DatabaseReference mFirebaseDatabase;
     RecyclerView recyclerView;
-    private Recyclerview_adapter rec_adapter;
+    private RecyclerviewAdapter rec_adapter;
     List<FeedDataModel.FeedsBean> userFeed = new ArrayList<FeedDataModel.FeedsBean>();
     private String TAG = "LeapFrog";
     ProgressView progressView;
@@ -94,7 +93,7 @@ public class FeedActivity extends AppCompatActivity
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
 
-                rec_adapter = new Recyclerview_adapter(FeedActivity.this, userFeed);
+                rec_adapter = new RecyclerviewAdapter(FeedActivity.this, userFeed);
                 recyclerView.setAdapter(rec_adapter);
                 recyclerView.setHasFixedSize(true);
             }

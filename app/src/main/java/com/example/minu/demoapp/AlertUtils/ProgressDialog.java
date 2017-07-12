@@ -9,12 +9,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
  */
 
 public class ProgressDialog {
-    public static void displayMaterialProgressDialog(String title, String msg) {
-
-
-    }
-
-    public static void progress(Context context,MaterialDialog dialog) {
+    static MaterialDialog dialog;
+    public static   void progress(Context context) {
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title("Loading.....")
@@ -26,9 +22,10 @@ public class ProgressDialog {
 
     }
 
-    public static void dismissDialog(Context context, MaterialDialog dialog) {
+    public static void dismissDialog(Context context) {
         if(dialog!=null) {
             dialog.dismiss();
+            dialog.hide();
         }
     }
 

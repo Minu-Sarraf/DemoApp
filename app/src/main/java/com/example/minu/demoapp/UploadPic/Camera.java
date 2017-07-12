@@ -3,6 +3,7 @@ package com.example.minu.demoapp.UploadPic;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -32,18 +33,11 @@ public class Camera {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
                 .format(new Date());
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File out = null;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // out = new File(MyApplication.getInstance().getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + timeStamp + ".jpg");
-        } else {
-            // out=new File(c.getFilesDir().getAbsolutePath(),timeStamp+"jpg");
-            Toast.makeText(c, "You dont have Sd-card", Toast.LENGTH_LONG).show();
-        }
+
         File path = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File file = new File(path, timeStamp + ".jpg");
         try {
-            // Make sure the Pictures directory exists.
             path.mkdirs();
             file.createNewFile();
         } catch (IOException e) {
@@ -51,7 +45,7 @@ public class Camera {
         }
         outputUri = Uri.fromFile(file.getAbsoluteFile());
         //store in sharedPreference
-        Constant.camUri = outputUri;
+        storeUri(outputUri, c);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -65,5 +59,14 @@ public class Camera {
         ((Activity) c).startActivityForResult(intent, Constant.cam);
         return outputUri;
     }
+
+    private static void storeUri(Uri outputUri, Context context) {
+
+        SharedPreferences sp = context.getSharedPreferences("userInfo", context.MODE_PRIVATE);
+        SharedPreferences.Editor et = sp.edit();
+        et.putString("uri", String.valueOf(outputUri));
+        et.commit();
+    }
+
 
 }
