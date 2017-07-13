@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minu.demoapp.Constants.Constant;
@@ -22,7 +23,7 @@ import com.squareup.picasso.Picasso;
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
     TextView txName;
     Button btn;
-    CircularImageView imPic;
+    ImageView imPic;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;
 
@@ -33,7 +34,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         txName = (TextView) findViewById(R.id.userName);
         btn = (Button) findViewById(R.id.logout);
         btn.setOnClickListener(this);
-        imPic = (CircularImageView) findViewById(R.id.userImg);
+        imPic = (ImageView) findViewById(R.id.userImg);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAuth = FirebaseAuth.getInstance();
@@ -47,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                ShowLog.log("updatePROFILE","SIGNOUT");
+                ShowLog.log("updatePROFILE", "SIGNOUT");
                 if (user != null) {
                     ShowLog.log("SignIn", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
@@ -65,6 +66,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         txName.setText(sp.getString("name", "Unknown User"));
         Picasso.with(this).load(Uri.parse(sp.getString("uri", ""))).resize(150, 150).placeholder(R.drawable.profile).into(imPic);
     }
+
     @Override
     public void onStart() {
         super.onStart();
