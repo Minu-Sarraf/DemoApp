@@ -2,6 +2,9 @@ package com.example.minu.demoapp.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
@@ -11,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.example.minu.demoapp.Activity.LoginActivity;
 import com.example.minu.demoapp.BaseFragment.BaseFragment;
+import com.example.minu.demoapp.IdlingResource.SimpleIdleResource;
 import com.example.minu.demoapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -70,6 +75,8 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.login) {
+            ((LoginActivity) getActivity()).updateIdleState(false);
+
             if (!validateForm()) {
                 return;
             } else {

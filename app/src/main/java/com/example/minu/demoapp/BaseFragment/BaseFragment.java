@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +16,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minu.demoapp.Activity.FeedActivity;
+import com.example.minu.demoapp.Activity.LoginActivity;
 import com.example.minu.demoapp.AlertUtils.ProgressDialog;
+import com.example.minu.demoapp.IdlingResource.SimpleIdleResource;
 import com.example.minu.demoapp.Model.Id;
 import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +49,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private UploadTask uploadTask;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +65,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
 
 
     public void AuthListener() {
@@ -78,6 +83,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     int status;
+
     //store user data to Firebase Database
     public void createUser() {
 
@@ -85,6 +91,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         mFirebaseDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(key).child("name").setValue(rNameField.getText().toString());
         mFirebaseDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(key).child("email").setValue(rEmailField.getText().toString());
     }
+
     public int createAccount(String email, String password) {
         ProgressDialog.progress(getActivity());
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -141,6 +148,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         } else {
+                            ((LoginActivity) getActivity()).updateIdleState(true);
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         }
@@ -154,7 +162,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             String id = user.getUid();
             Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
             startActivity(feedAactivity);
-            Id.userId = id;
         } else {
         }
     }
@@ -181,6 +188,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onDetach();
 
     }
+
 
 
 }

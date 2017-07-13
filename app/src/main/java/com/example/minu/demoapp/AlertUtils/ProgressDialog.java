@@ -10,7 +10,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 public class ProgressDialog {
     static MaterialDialog dialog;
-    public static   void progress(Context context) {
+
+    public static void progress(Context context) {
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title("Loading.....")
@@ -23,7 +24,7 @@ public class ProgressDialog {
     }
 
     public static void dismissDialog(Context context) {
-        if(dialog!=null) {
+        if (dialog != null) {
             dialog.dismiss();
             dialog.hide();
         }

@@ -28,9 +28,6 @@ import java.util.List;
  * Created by User on 6/16/2016.
  */
 public class Reduceimagesize {
-    static Bitmap bitmapPhoto;
-    static Uri uri1;
-
 
     public static Bitmap decodeSampledBitmapFromByte(byte[] res,
                                                      int reqWidth, int reqHeight) {
@@ -63,7 +60,6 @@ public class Reduceimagesize {
         }
         return inSampleSize;
     }
-
 
 
 }
