@@ -51,6 +51,8 @@ public class RegisterFragment extends BaseFragment {
                 return;
             } else {
                 createAccount(rEmailField.getText().toString(), rPasswordField.getText().toString());
+                rEmailField.setText("");
+                rPasswordField.setText("");
             }
 
 

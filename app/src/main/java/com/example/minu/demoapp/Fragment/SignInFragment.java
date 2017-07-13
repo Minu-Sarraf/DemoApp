@@ -81,6 +81,8 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                 return;
             } else {
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                mEmailField.setText("");
+                mPasswordField.setText("");
             }
         } else if (view.getId() == R.id.register) {
             ((LoginActivity) getActivity()).callFragment();

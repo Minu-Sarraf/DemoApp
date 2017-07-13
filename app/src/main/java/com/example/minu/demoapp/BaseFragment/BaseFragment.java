@@ -49,7 +49,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private UploadTask uploadTask;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,11 +137,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     public void signIn(String email, String password) {
-
+        ProgressDialog.progress(getActivity());
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        ProgressDialog.dismissDialog(getActivity());
                         if (!task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -162,7 +162,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             String id = user.getUid();
             Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
             startActivity(feedAactivity);
-        } else {
+            getActivity().finish();
         }
     }
 
@@ -173,7 +173,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
-        FirebaseAuth.getInstance().signOut();
+        //  FirebaseAuth.getInstance().signOut();
     }
 
 
@@ -188,7 +188,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onDetach();
 
     }
-
 
 
 }
