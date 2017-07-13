@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
-import com.example.minu.demoapp.Constant;
-import com.example.minu.demoapp.Permission;
-import com.example.minu.demoapp.R;
+import com.example.minu.demoapp.Constants.Constant;
+import com.example.minu.demoapp.AndroidPermission.Permission;
 import com.example.minu.demoapp.UploadPic.Camera;
 import com.example.minu.demoapp.UploadPic.Gallery;
 

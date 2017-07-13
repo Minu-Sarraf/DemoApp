@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minu.demoapp.Activity.UserProfileActivity;
-import com.example.minu.demoapp.DisplaySize;
+import com.example.minu.demoapp.CalculatewindowSize.DisplaySize;
 import com.example.minu.demoapp.Model.FeedDataModel;
 import com.example.minu.demoapp.R;
-import com.example.minu.demoapp.ShowLog;
+import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 import com.rey.material.widget.ProgressView;
 import com.squareup.picasso.Callback;

@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.minu.demoapp.Constant;
-import com.example.minu.demoapp.Permission;
+import com.example.minu.demoapp.Constants.Constant;
+import com.example.minu.demoapp.AndroidPermission.Permission;
 
 
 /**

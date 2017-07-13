@@ -5,14 +5,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.minu.demoapp.AlertUtils.ProgressDialog;
-import com.example.minu.demoapp.CheckInternet;
-import com.rey.material.widget.ProgressView;
+import com.example.minu.demoapp.CheckInternet.CheckInternet;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -27,7 +23,7 @@ import java.io.IOException;
 public class PicassoLoad {
 
     public static void picassoload(final Uri a, final ImageView ivimage, final Context context) {
-        ProgressDialog.progress(context);
+      //  ProgressDialog.progress(context);
         Picasso.with(context).load(a).resize(200,200).onlyScaleDown().memoryPolicy(MemoryPolicy.NO_CACHE)
                 .centerInside().into(ivimage, new Callback() {
             @Override

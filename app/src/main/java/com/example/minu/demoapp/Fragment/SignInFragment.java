@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,21 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minu.demoapp.Activity.FeedActivity;
 import com.example.minu.demoapp.Activity.LoginActivity;
 import com.example.minu.demoapp.Model.Id;
 import com.example.minu.demoapp.R;
-import com.example.minu.demoapp.ShowLog;
+import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.concurrent.Executor;
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "Leapfrog.SiginIn";
@@ -51,7 +47,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.signin_layout, container, false);
+        View view = inflater.inflate(R.layout.login_layout, container, false);
         mEmailField = view.findViewById(R.id.userEmail);
         mPasswordField = view.findViewById(R.id.userPassword);
         btnRegister = view.findViewById(R.id.register);

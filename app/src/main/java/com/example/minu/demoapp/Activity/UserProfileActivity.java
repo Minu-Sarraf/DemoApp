@@ -9,15 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.minu.demoapp.Constant;
+import com.example.minu.demoapp.Constants.Constant;
 import com.example.minu.demoapp.R;
-import com.example.minu.demoapp.ShowLog;
+import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.github.siyamed.shapeimageview.CircularImageView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -75,8 +72,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void logout() {
-        FirebaseAuth.getInstance()
-                .signOut();
+        Log.e("logout","logout");
+        FirebaseAuth.getInstance().signOut();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.minu.demoapp;
+package com.example.minu.demoapp.CalculatewindowSize;
 
 import android.content.Context;
 import android.graphics.Point;

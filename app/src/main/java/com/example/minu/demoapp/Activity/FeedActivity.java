@@ -16,7 +16,7 @@ import android.view.View;
 
 import com.example.minu.demoapp.Model.FeedDataModel;
 import com.example.minu.demoapp.R;
-import com.example.minu.demoapp.ShowLog;
+import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.example.minu.demoapp.Adapter.RecyclerviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

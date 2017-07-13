@@ -4,36 +4,29 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.example.minu.demoapp.AlertUtils.ProgressDialog;
-import com.example.minu.demoapp.Constant;
+import com.example.minu.demoapp.Constants.Constant;
 import com.example.minu.demoapp.Fragment.RegisterFragment;
 import com.example.minu.demoapp.Fragment.SignInFragment;
 import com.example.minu.demoapp.R;
-import com.example.minu.demoapp.ShowLog;
-import com.example.minu.demoapp.UploadPic.PicassoLoad;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.minu.demoapp.UploadPic.Camera;
+import com.example.minu.demoapp.UploadPic.Gallery;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
     StorageReference storageRef;
     FirebaseStorage storage;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +54,11 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences(Constant.userInfo, MODE_PRIVATE);
         String outputUri = null;
         if (resultCode == Activity.RESULT_OK) {
-            ShowLog.log("camera", "Result Ok" + Constant.camUri);
             if (requestCode == Constant.gallary) {
                 outputUri = String.valueOf(data.getData());
                 ((RegisterFragment) getSupportFragmentManager().findFragmentByTag("register")).uploadPic(data.getData());
             } else if (requestCode == Constant.cam) {
                 outputUri = sp.getString("uri", "no data");
-
-
                 ((RegisterFragment) getSupportFragmentManager().findFragmentByTag("register")).uploadPic(Uri.parse(outputUri));
 
             }
@@ -78,9 +68,32 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor et = sp.edit();
         et.putString("uri", (outputUri));
         et.commit();
-        firebasseStorage(data);
+       
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case (Constant.cam):
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        Uri outputuri = Camera.cameraIntent(this);
+                        Constant.camUri = outputuri;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case (Constant.gallary):
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        Gallery.galleryIntent(this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+        }
+    }
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
@@ -92,22 +105,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void firebasseStorage(Intent data) {
-        ProgressDialog.progress(LoginActivity.this);
-        StorageReference filepath = storageRef.child("photos").child(data.getData().getLastPathSegment());
-        filepath.putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(LoginActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
-                ProgressDialog.dismissDialog(LoginActivity.this);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
+   
 }
 

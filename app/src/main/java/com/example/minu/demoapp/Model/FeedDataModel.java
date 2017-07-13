@@ -1,13 +1,18 @@
 package com.example.minu.demoapp.Model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.List;
 
 /**
  * Created by minu on 7/10/2017.
  */
+@IgnoreExtraProperties
 
 public class FeedDataModel {
+    public FeedDataModel() {
 
+    }
     private List<FeedsBean> feeds;
 
     public List<FeedsBean> getFeeds() {

@@ -1,4 +1,4 @@
-package com.example.minu.demoapp;
+package com.example.minu.demoapp.AndroidPermission;
 
 import android.Manifest;
 import android.annotation.TargetApi;
