@@ -23,7 +23,7 @@ import java.io.IOException;
 public class PicassoLoad {
 
     public static void picassoload(final Uri a, final ImageView ivimage, final Context context) {
-      //  ProgressDialog.progress(context);
+
         Picasso.with(context).load(a).resize(200,200).onlyScaleDown().memoryPolicy(MemoryPolicy.NO_CACHE)
                 .centerInside().into(ivimage, new Callback() {
             @Override

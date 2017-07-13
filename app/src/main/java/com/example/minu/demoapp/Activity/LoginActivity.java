@@ -26,7 +26,7 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
     StorageReference storageRef;
     FirebaseStorage storage;
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("camera", "mainActivity");
+
         SharedPreferences sp = getSharedPreferences(Constant.userInfo, MODE_PRIVATE);
         String outputUri = null;
         if (resultCode == Activity.RESULT_OK) {
@@ -68,8 +68,9 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor et = sp.edit();
         et.putString("uri", (outputUri));
         et.commit();
-       
+
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -94,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
@@ -105,6 +107,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-   
+
 }
 

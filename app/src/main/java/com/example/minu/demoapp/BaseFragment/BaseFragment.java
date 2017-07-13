@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.minu.demoapp.Activity.FeedActivity;
+import com.example.minu.demoapp.AlertUtils.ProgressDialog;
 import com.example.minu.demoapp.Model.Id;
 import com.example.minu.demoapp.ShowLog.ShowLog;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +47,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ShowLog.log("BaseFragment", "Baseclass");
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
         sp = getActivity().getSharedPreferences("userInfo", getActivity().MODE_PRIVATE);
@@ -54,21 +54,30 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     }
 
-      /*  @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-           // View view = inflater.inflate(R.layout.register_fragment, container, false);
-            return inflater.inflate(getFragmentManager(), container, false);
-            //return view;
-        }*/
-
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+
+
+    public void AuthListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    ShowLog.log(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+
+    int status;
     //store user data to Firebase Database
     public void createUser() {
 
@@ -76,51 +85,22 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         mFirebaseDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(key).child("name").setValue(rNameField.getText().toString());
         mFirebaseDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(key).child("email").setValue(rEmailField.getText().toString());
     }
-    public void AuthListener() {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-
-                   /* Intent feeds = new Intent(getActivity(), FeedActivity.class);
-                    startActivity(feeds);
-                    getActivity().finish();*/
-                    ShowLog.log(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
-    }
-
-    int status;
-
     public int createAccount(String email, String password) {
-            /*if (!validateForm()) {
-                return;
-            }*/
-
+        ProgressDialog.progress(getActivity());
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        ProgressDialog.dismissDialog(getActivity());
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-
-
                             firebasseStorage();
                             updateUI(mAuth.getCurrentUser());
                             createUser();
                         }
-
-                        // ...
                     }
                 });
         return status;
@@ -139,39 +119,28 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.e("upload", exception.getCause() + "");
+
+                ShowLog.log("upload", exception.getCause() + "");
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
     }
 
     public void signIn(String email, String password) {
-           /* if (!validateForm()) {
-                return;
-            }*/
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         } else {
-                            Log.w(TAG, "signInWithEmail Success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         }
@@ -181,28 +150,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
 
     private void updateUI(FirebaseUser user) {
-        //hideProgressDialog();
         if (user != null) {
             String id = user.getUid();
-            Log.d("ididid", id);
             Intent feedAactivity = new Intent(getActivity(), FeedActivity.class);
             startActivity(feedAactivity);
             Id.userId = id;
         } else {
-        }
-    }
-
-    public void getCurrentUser() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-
-            String uid = user.getUid();
-            Id.userId = uid;
         }
     }
 

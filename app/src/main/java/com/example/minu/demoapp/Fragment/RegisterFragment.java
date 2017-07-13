@@ -3,6 +3,7 @@ package com.example.minu.demoapp.Fragment;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,9 @@ import com.example.minu.demoapp.UploadPic.PicassoLoad;
 public class RegisterFragment extends BaseFragment {
 
 
-
     static ImageView rUserImage;
 
     Button rbtnRegister;
-
 
 
     @Override
@@ -48,13 +47,40 @@ public class RegisterFragment extends BaseFragment {
     public void onClick(View view) {
         storeData();
         if (view.getId() == R.id.register1) {
-            createAccount("minusarraf96@gmail.com","bex432505");
+            if (!validateForm()) {
+                return;
+            } else {
+                createAccount(rEmailField.getText().toString(), rPasswordField.getText().toString());
+            }
+
+
         } else if (view.getId() == R.id.uploadImage) {
             SelectImageDialog.selectImage(getActivity());
         }
     }
 
 
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String email = rEmailField.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            rEmailField.setError("Required.");
+            valid = false;
+        } else {
+            rEmailField.setError(null);
+        }
+
+        String password = rPasswordField.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            rPasswordField.setError("Required.");
+            valid = false;
+        } else {
+            rPasswordField.setError(null);
+        }
+
+        return valid;
+    }
 
 
     @Override
@@ -75,7 +101,6 @@ public class RegisterFragment extends BaseFragment {
         et.putString("name", rNameField.getText().toString());
         et.commit();
     }
-
 
 
     public void uploadPic(Uri uri) {

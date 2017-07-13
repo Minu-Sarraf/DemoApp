@@ -45,6 +45,8 @@ public class Camera {
         outputUri = Uri.fromFile(file.getAbsoluteFile());
         //store in sharedPreference
         storeUri(outputUri, c, file);
+
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(c.getPackageManager()) != null) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);

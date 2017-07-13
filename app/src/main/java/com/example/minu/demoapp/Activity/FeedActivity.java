@@ -78,16 +78,10 @@ public class FeedActivity extends AppCompatActivity
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ShowLog.log("mData", dataSnapshot.getKey());
-                ShowLog.log("mData", String.valueOf(dataSnapshot.hasChildren()));
-                ShowLog.log("mData", String.valueOf(dataSnapshot.getChildrenCount()));
-
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     ShowLog.log("mData Key", userSnapshot.getKey());
                     FeedDataModel.FeedsBean feedData = userSnapshot.getValue(FeedDataModel.FeedsBean.class);
                     userFeed.add(feedData);
-
-                    ShowLog.log(TAG, userSnapshot.getChildrenCount() + "");
                 }
 
                 progressView.setVisibility(View.GONE);
